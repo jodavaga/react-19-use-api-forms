@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Planet } from '../../interfaces/planet.interface';
+import { useState } from "react";
+import { Planet } from "../../interfaces/planet.interface";
 
 interface Props {
   onAddPlanet: (planet: Partial<Planet>) => void;
 }
 
 export const EditPlanetForm = ({ onAddPlanet }: Props) => {
-  const [name, setName] = useState('');
-  const [type, setType] = useState('');
-  const [distanceFromSun, setDistanceFromSun] = useState('');
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [distanceFromSun, setDistanceFromSun] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

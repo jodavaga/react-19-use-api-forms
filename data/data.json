@@ -29,6 +29,18 @@
       "name": "Júpiter",
       "type": "Planeta",
       "distanceFromSun": "778.5 millones de km"
+    },
+    {
+      "id": "1ac9",
+      "name": "Pluton",
+      "type": "planeta",
+      "distanceFromSun": "880"
+    },
+    {
+      "id": "6302",
+      "name": "Neptuno",
+      "type": "planeta",
+      "distanceFromSun": "3424"
     }
   ]
 }
