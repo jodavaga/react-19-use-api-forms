@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+# ignoring changes on data
+data/data.json
 
 # Editor directories and files
 .vscode/*
