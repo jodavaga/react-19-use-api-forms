@@ -12,7 +12,8 @@ const Planets: FC<Props> = ({ getPlanets }: Props) => {
   const [currentPlanets, setCurrentPlanets] = useState<Planet[]>(planets);
 
   const handleAddPlanet = (planet: Planet) => {
-    setCurrentPlanets([...currentPlanets, planet]);
+    console.log("🚀 ~ handleAddPlanet ~ planet:", planet);
+    setCurrentPlanets((prevState) => [...prevState, planet]);
   };
 
   return (
