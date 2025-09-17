@@ -1,8 +1,7 @@
-import { FC, use } from "react";
+import { FC, use, useState } from "react";
 import { Planet } from "../interfaces/planet.interface";
 import { EditPlanetForm } from "./ui/EditPlanetForm";
 import { PlanetList } from "./ui/PlanetList";
-import { createPlanetAction } from "../actions/create-planet.action";
 
 interface Props {
   getPlanets: Promise<Planet[]>;
@@ -10,10 +9,11 @@ interface Props {
 
 const Planets: FC<Props> = ({ getPlanets }: Props) => {
   const planets = use(getPlanets);
+  const [currentPlanets, setCurrentPlanets] = useState<Planet[]>(planets);
 
-  const handleAddPlanet = async (planet: Partial<Planet>) => {
-    const newPlanet = await createPlanetAction(planet);
-    console.log("Planet Aded!! ", newPlanet);
+  const handleAddPlanet = (planet: Planet) => {
+    console.log("Planet Aded!! ", planet);
+    setCurrentPlanets([...currentPlanets, planet]);
   };
 
   return (
@@ -23,7 +23,7 @@ const Planets: FC<Props> = ({ getPlanets }: Props) => {
       {/* Formulario para agregar un planeta */}
       <EditPlanetForm onAddPlanet={handleAddPlanet} />
 
-      <PlanetList planets={planets} />
+      <PlanetList planets={currentPlanets} />
     </>
   );
 };
