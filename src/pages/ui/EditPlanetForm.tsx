@@ -30,14 +30,12 @@ export const EditPlanetForm = ({ onAddPlanet }: Props) => {
         placeholder="Tipo de astro"
         className="mb-2 md:mb-0 md:mr-2 p-2 border border-gray-300 rounded flex-1"
         name="type"
-        required
       />
       <input
         type="text"
         placeholder="Distancia del sol"
         className="mb-2 md:mb-0 md:mr-2 p-2 border border-gray-300 rounded flex-1"
         name="distanceFromSun"
-        required
       />
       <SubmitFormButton />
     </form>

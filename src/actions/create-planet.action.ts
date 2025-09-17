@@ -19,7 +19,14 @@ export const createPlanetActioForm = async (
 ): Promise<Planet> => {
   // Get all data coming from the form
   const formData = Object.fromEntries(queryData.entries());
-  console.log("Adding planet using useActionState: ", { prevState, formData });
+
+  if (!formData.distanceFromSun) {
+    formData.distanceFromSun = "Desconocida";
+  }
+  if (!formData.type) {
+    formData.type = "Category not defined";
+  }
+
   try {
     const res = await planetsApi.post<Planet>("/", formData);
     return res.data;
