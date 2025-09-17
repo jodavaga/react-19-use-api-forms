@@ -1,33 +1,17 @@
-import { FC, useEffect, useState } from 'react';
-import { planetsApi } from '../api/planetsApi';
-import { Planet } from '../interfaces/planet.interface';
-import { EditPlanetForm } from './ui/EditPlanetForm';
-import { PlanetList } from './ui/PlanetList';
+import { FC, use } from "react";
+import { Planet } from "../interfaces/planet.interface";
+import { EditPlanetForm } from "./ui/EditPlanetForm";
+import { PlanetList } from "./ui/PlanetList";
 
-const getPlanets = async () => {
-  const res = await planetsApi.get('/');
-  return res.data;
-};
+interface Props {
+  getPlanets: Promise<Planet[]>;
+}
 
-const Planets: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [planets, setPlanets] = useState<Planet[]>([]);
-
-  useEffect(() => {
-    getPlanets()
-      .then((res) => {
-        setPlanets(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+const Planets: FC<Props> = ({ getPlanets }: Props) => {
+  const planets = use(getPlanets);
 
   const handleAddPlanet = (planet: Partial<Planet>) => {
-    console.log(planet);
+    console.log("Planet to add: ", planet);
   };
 
   return (
@@ -37,15 +21,7 @@ const Planets: FC = () => {
       {/* Formulario para agregar un planeta */}
       <EditPlanetForm onAddPlanet={handleAddPlanet} />
 
-      {error && (
-        <p>
-          Error al cargar los planetas -{' '}
-          <small className="text-red-500">{error}</small>
-        </p>
-      )}
-
-      {/* Lista de planetas Grid*/}
-      {isLoading ? <p>Cargando...</p> : <PlanetList planets={planets} />}
+      <PlanetList planets={planets} />
     </>
   );
 };

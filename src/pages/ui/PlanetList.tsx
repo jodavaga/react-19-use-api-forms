@@ -1,10 +1,11 @@
-import { Planet } from '../../interfaces/planet.interface';
+import { FC } from "react";
+import { Planet } from "../../interfaces/planet.interface";
 
 interface Props {
   planets: Planet[];
 }
 
-export const PlanetList = ({ planets }: Props) => {
+export const PlanetList: FC<Props> = ({ planets }: Props) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 animate-fadeIn">
       {planets.map((planet) => (
