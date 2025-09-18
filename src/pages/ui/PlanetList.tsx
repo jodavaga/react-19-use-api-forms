@@ -1,4 +1,4 @@
-import { FC, useOptimistic } from "react";
+import { FC, useOptimistic, useTransition } from "react";
 import { Planet } from "../../interfaces/planet.interface";
 import { updatePlanetAction } from "../../actions/update-planet.action";
 
@@ -7,24 +7,29 @@ interface Props {
 }
 
 export const PlanetList: FC<Props> = ({ planets }: Props) => {
+  const [isPending, startTransition] = useTransition();
+
   const [optimisticPlanets, setOptimisticPlanets] = useOptimistic(
     planets,
     (currentPlanets: Planet[], newPlanet: Planet) => {
-      const updatedPlanets = currentPlanets.map((p) => {
-        if (p.id === newPlanet.id) {
-          return newPlanet;
-        }
-        return p;
+      return currentPlanets.map((p) => {
+        return p.id === newPlanet.id ? newPlanet : p;
       });
-
-      return updatedPlanets;
     }
   );
 
   const handlePlanetUpdate = async (planet: Planet) => {
-    planet.name = planet.name.toUpperCase();
-    setOptimisticPlanets(planet);
-    const updatedPlanet = await updatePlanetAction(planet);
+    const updatedPlanet = { ...planet, name: planet.name.toUpperCase() };
+    startTransition(async () => {
+      try {
+        setOptimisticPlanets(updatedPlanet);
+        const serverPlanet = await updatePlanetAction(updatedPlanet);
+        setOptimisticPlanets(serverPlanet);
+      } catch (err) {
+        console.log("reverting");
+        setOptimisticPlanets(planet);
+      }
+    });
   };
 
   return (
